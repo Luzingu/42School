@@ -25,32 +25,43 @@ void	ft_put_pixel(t_fdf *fdf, int x, int y, int color)
 	}
 }
 
-void	draw_line2(t_point start, t_point end, t_fdf *fdf)
+void	calculate_error(t_point *current, t_point *error,
+t_point diff, t_point sentido)
 {
-	t_point	delta;
-	t_point	sign;
-	t_point	cur;
-	int		error[2];
-
-	delta.x = ft_abs_value(end.x - start.x);
-	delta.y = ft_abs_value(end.y - start.y);
-	sign.x = start.x < end.x ? 1 : -1;
-	sign.y = start.y < end.y ? 1 : -1;
-	error[0] = delta.x - delta.y;
-	cur = start;
-	while (cur.x != end.x || cur.y != end.y)
+	error->y = error->x * 2;
+	if (error->y > -diff.y)
 	{
-		ft_put_pixel(fdf, cur.x, cur.y, cur.cor);
-		if ((error[1] = error[0] * 2) > -delta.y)
-		{
-			error[0] -= delta.y;
-			cur.x += sign.x;
-		}
-		if (error[1] < delta.x)
-		{
-			error[0] += delta.x;
-			cur.y += sign.y;
-		}
+		error->x -= diff.y;
+		current->x += sentido.x;
+	}
+	if (error->y < diff.x)
+	{
+		error->x += diff.x;
+		current->y += sentido.y;
+	}
+}
+
+void	draw_line(t_point pt_start, t_point pt_end, t_fdf *fdf)
+{
+	t_point	diff;
+	t_point	sentido;
+	t_point	current;
+	t_point	error;
+
+	diff.x = ft_abs_value(pt_end.x - pt_start.x);
+	diff.y = ft_abs_value(pt_end.y - pt_start.y);
+	sentido.x = -1;
+	if (pt_start.x < pt_end.x)
+		sentido.x = 1;
+	sentido.y = -1;
+	if (pt_start.y < pt_end.y)
+		sentido.y = 1;
+	error.x = diff.x - diff.y;
+	current = pt_start;
+	while (current.x != pt_end.x || current.y != pt_end.y)
+	{
+		ft_put_pixel(fdf, current.x, current.y, current.cor);
+		calculate_error(&current, &error, diff, sentido);
 	}
 }
 
@@ -75,21 +86,20 @@ void	draw(t_fdf *fdf, t_mapa *mapa)
 {
 	int	x;
 	int	y;
-	
+
+	y = 0;
 	recriate_image(fdf);
-	
-	y = 0;	
 	while (y < fdf->mapa->height)
 	{
 		x = 0;
 		while (x < fdf->mapa->width)
 		{
-			
-			if ( y != fdf->mapa->height - 1)
-				draw_line2(project_iso(get_point(x, y, mapa), fdf), project_iso(get_point(x, y + 1, mapa), fdf), fdf);
-			
-			if ( x != fdf->mapa->width - 1)
-				draw_line2(project_iso(get_point(x, y, mapa), fdf), project_iso(get_point(x + 1, y, mapa), fdf), fdf);
+			if (x != fdf->mapa->width - 1)
+				draw_line(project_iso(create_point(x, y, mapa), fdf),
+					project_iso(create_point(x + 1, y, mapa), fdf), fdf);
+			if (y != fdf->mapa->height -1)
+				draw_line(project_iso(create_point(x, y, mapa), fdf),
+					project_iso(create_point(x, y + 1, mapa), fdf), fdf);
 			x++;
 		}
 		y++;

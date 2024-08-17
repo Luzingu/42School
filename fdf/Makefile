@@ -40,7 +40,7 @@ CYAN            := \033[0;36m
 RESET           := \033[0m
 
 ${NAME}:        ${MLX} ${LIBFT} ${OBJSDIR} ${OBJS}
-		${CC} -g ${OBJS} -o ${NAME} ${LIBS} ${INCS}
+		${CC} $(FLAGS) ${OBJS} -o ${NAME} ${LIBS} ${INCS}
 
 ${LIBFT}:
 		make -C ${LIBFTDIR}
@@ -49,7 +49,7 @@ ${MLX}:
 		make -C ${MLXDIR}
 
 ${OBJSDIR}%.o: ${SRCSDIR}%.c ${HEADERS}
-		${CC} -g ${INCS} -c $< -o $@
+		${CC} $(FLAGS) ${INCS} -c $< -o $@
 		
 ${OBJSDIR}:
 		mkdir -p ${OBJSDIR}

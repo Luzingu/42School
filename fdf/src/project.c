@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-void	iso(int *x, int *y, int z)
+void	iso(int *x, int *y, int valor)
 {
 	int	previous_x;
 	int	previous_y;
@@ -20,7 +20,7 @@ void	iso(int *x, int *y, int z)
 	previous_x = *x;
 	previous_y = *y;
 	*x = (previous_x - previous_y) * cos(0.523599);
-	*y = (previous_x + previous_y) * sin(0.523599) - z;
+	*y = (previous_x + previous_y) * sin(0.523599) - valor;
 }
 
 void	rotate_x(int *y, int *z, double alpha)
@@ -54,19 +54,18 @@ void	rotate_z(int *x, int *y, double gamma)
 
 t_point	project_iso(t_point p, t_fdf *fdf)
 {
-	
 	p.x *= fdf->camera->zoom;
 	p.y *= fdf->camera->zoom;
-	
+	p.valor *= fdf->camera->zoom / fdf->camera->z_divisor;
 	p.x -= (fdf->mapa->width * fdf->camera->zoom) / 2;
 	p.y -= (fdf->mapa->height * fdf->camera->zoom) / 2;
-	p.z *= fdf->camera->zoom / fdf->camera->z_divisor;
-	if (fdf->camera->projection == 'I')
-		iso(&p.x, &p.y, p.z);
-	rotate_x(&p.y, &p.z, fdf->camera->angle_rot_x);
-	rotate_y(&p.x, &p.z, fdf->camera->angle_rot_y);
+	rotate_x(&p.y, &p.valor, fdf->camera->angle_rot_x);
+	rotate_y(&p.x, &p.valor, fdf->camera->angle_rot_y);
 	rotate_z(&p.x, &p.y, fdf->camera->angle_rot_z);
-	p.y += fdf->camera->y_offset +  (HEIGHT + fdf->mapa->height * fdf->camera->zoom) / 2 - 100;
-	p.x += fdf->camera->x_offset + (WIDTH - MENU_WIDTH) / 2 + MENU_WIDTH;
+	if (fdf->camera->projection == 'I')
+		iso(&p.x, &p.y, p.valor);
+	p.x += (WIDTH - MENU_WIDTH) / 2 + fdf->camera->x_offset + MENU_WIDTH;
+	p.y += (HEIGHT + fdf->mapa->height * fdf->camera->zoom) / 2
+		+ fdf->camera->y_offset -100;
 	return (p);
 }

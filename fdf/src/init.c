@@ -29,8 +29,6 @@ t_camera	*camera_init(t_fdf *fdf)
 		terminate(ERR_CAMERA_INIT);
 	camera->zoom = ft_min((WIDTH - MENU_WIDTH) / fdf->mapa->width / 2,
 			HEIGHT / fdf->mapa->height / 2);
-	
-	
 	camera->angle_rot_x = 0;
 	camera->angle_rot_y = 0;
 	camera->angle_rot_z = 0;
@@ -41,77 +39,7 @@ t_camera	*camera_init(t_fdf *fdf)
 	return (camera);
 }
 
-
-void	ft_add_point(int *coords, t_point **points)
-{
-	t_point	*point;
-	t_point	*tmp_points;
-
-	point = (t_point *)malloc(sizeof(t_point));
-	point->x = coords[1];
-	point->y = coords[0];
-	point->z = coords[2];
-	point->cor = coords[3];
-	point->next = NULL;
-	
-	if (!(*points))
-	{
-		(*points) = point;
-		return ;
-	}
-	tmp_points = *points;
-	while (tmp_points && tmp_points->next)
-	{
-		tmp_points = tmp_points->next;
-	}
-	tmp_points->next = point;
-}
-
-void	ft_read_points(int fd, t_mapa **mapa)
-{
-	char	*tmp_line;
-	char	**tmp_lines_mtz;
-	int	coords[4];
-	t_point *points;
-	char			**partes;
-
-	points = NULL;
-	tmp_line = get_next_line(fd);
-	while (tmp_line)
-	{
-		
-		tmp_line = remove_new_line(tmp_line);
-		tmp_lines_mtz = ft_split(tmp_line, ' ');
-		if (tmp_lines_mtz && tmp_lines_mtz[0])
-		{
-			coords[0] = (*mapa)->height;
-			coords[1] = 0;
-			while (tmp_lines_mtz[coords[1]])
-			{
-				partes = ft_split(tmp_lines_mtz[coords[1]], ',');
-				if (!ft_isnumber(partes[0], 10))
-					terminate(ERR_MAP_READING);
-				if (partes[1] && !ft_isnumber(partes[1], 16))
-					terminate(ERR_MAP_READING);
-				coords[2] = ft_atoi_base(partes[0], 10);
-				coords[3] = -1;
-				if (partes[1])
-					coords[3] = ft_atoi_base(partes[1], 16);
-				ft_add_point(coords, &points);			
-				(coords[1])++;
-			}
-			if ((*mapa)->height == 0)
-				(*mapa)->width = coords[1];
-			if ((*mapa)->width != coords[1])
-				terminate(ERR_MAP);
-			(*mapa)->height++;
-		}
-		tmp_line = get_next_line(fd);
-	}
-	(*mapa)->pontos = points;
-}
-
-t_mapa	*mapa_init(int fd)
+t_mapa	*mapa_init(void)
 {
 	t_mapa	*mapa;
 
@@ -120,13 +48,12 @@ t_mapa	*mapa_init(int fd)
 		terminate(ERR_MAP_INIT);
 	mapa->height = 0;
 	mapa->width = 0;
-	ft_read_points(fd, &mapa);
+	mapa->coords_values = NULL;
+	mapa->coords_colors = NULL;
 	mapa->max_value = INT_MIN;
 	mapa->min_value = INT_MAX;
 	return (mapa);
 }
-
-
 
 t_fdf	*fdf_init(t_mapa *mapa)
 {

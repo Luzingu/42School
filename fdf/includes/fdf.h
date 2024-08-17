@@ -60,13 +60,19 @@
 # define KEY_I				105
 # define KEY_P				112
 
+typedef struct s_coordenadas
+{
+	struct s_coordenadas	*next;
+	int						valor;
+	int						cor;
+}	t_coordenadas;
+
 typedef struct s_point
 {
 	int	x;
 	int	y;
-	int	z;
+	int	valor;
 	int	cor;
-	struct	s_point	*next;
 }	t_point;
 
 typedef struct s_camera
@@ -85,9 +91,10 @@ typedef struct s_mapa
 {
 	int	width;
 	int	height;
+	int	*coords_values;
+	int	*coords_colors;
 	int	max_value;
 	int	min_value;
-	t_point	*pontos;
 }	t_mapa;
 
 typedef struct s_fdf
@@ -104,7 +111,7 @@ typedef struct s_fdf
 }	t_fdf;
 
 t_camera		*camera_init(t_fdf *fdf);
-t_mapa			*mapa_init(int fd);
+t_mapa			*mapa_init(void);
 t_fdf			*fdf_init(t_mapa *mapa);
 void			move(int key, t_fdf *fdf);
 void			zoom(int key, t_fdf *fdf);
@@ -113,13 +120,19 @@ void			flatten(int key, t_fdf *fdf);
 void			change_projection(int key, t_fdf *fdf);
 int				check_extension(char *str);
 void			terminate(char *s);
+void			get_coordenadas(t_mapa *map,
+					t_coordenadas **coordenadas, int fd);
+void			stack_to_map(t_coordenadas **coordenadas, t_mapa *mapa);
 void			draw(t_fdf *fdf, t_mapa *mapa);
 int				ft_abs_value(int value);
 t_point			project_iso(t_point p, t_fdf *fdf);
-t_point			get_point(int x, int y, t_mapa *mapa);
+t_point			create_point(int x, int y, t_mapa *mapa);
 double			percent(int start, int end, int current);
 void			print_menu(t_fdf *fdf);
+void			ft_parse_line(char **line, t_mapa *map,
+					t_coordenadas **cordenadas);
 void			free_mtrx(char **arr);
+t_coordenadas	*pop(t_coordenadas **coordenadas);
 int				ft_isnumber(char *str, int base);
 int				ft_atoi_base(char *str, int base);
 int				get_color(t_point current, t_point pt_start,

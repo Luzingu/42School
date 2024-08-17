@@ -77,7 +77,7 @@ char	*ft_getline(char *full_string)
 	}
 	line[i] = '\0';
 	return (line);
-} 
+}
 
 char	*ft_getrest(char *full_string)
 {

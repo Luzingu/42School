@@ -14,8 +14,8 @@
 
 int	ft_close(t_fdf *fdf)
 {
-	//free(fdf->mapa->coords_colors);
-	//free(fdf->mapa->coords_values);
+	free(fdf->mapa->coords_colors);
+	free(fdf->mapa->coords_values);
 	free(fdf->mapa);
 	free(fdf->camera);
 	mlx_destroy_image(fdf->root, fdf->img);
@@ -23,8 +23,8 @@ int	ft_close(t_fdf *fdf)
 	mlx_destroy_display(fdf->root);
 	free(fdf->root);
 	free(fdf);
-	exit(0);
-	return(0);
+	exit (0);
+	return (0);
 }
 
 int	key_press(int key, void *param)
@@ -51,9 +51,6 @@ int	key_press(int key, void *param)
 
 void	setup_controls(t_fdf *fdf)
 {
-	void	*mlx;
-	void	*win;
-
 	mlx_key_hook(fdf->window, key_press, fdf);
 	mlx_hook(fdf->window, 17, 0, ft_close, fdf);
 }
@@ -61,17 +58,21 @@ void	setup_controls(t_fdf *fdf)
 int	main(int argc, char **argv)
 {
 	int				fd;
+	t_coordenadas	*coordenadas;
 	t_mapa			*mapa;
 	t_fdf			*fdf;
 
+	coordenadas = NULL;
 	if (argc == 2)
 	{
 		if (!check_extension(argv[1]))
 			terminate(ERR_MAP);
 		fd = open(argv[1], O_RDONLY);
-		if (fdf < 0)
+		if (fd == 0)
 			terminate(ERR_MAP);
-		mapa = mapa_init(fd);
+		mapa = mapa_init();
+		get_coordenadas(mapa, &coordenadas, fd);
+		stack_to_map(&coordenadas, mapa);
 		fdf = fdf_init(mapa);
 		fdf->camera = camera_init(fdf);
 		draw(fdf, mapa);

@@ -28,6 +28,19 @@ char	*remove_new_line(char *str)
 	return (str);
 }
 
+t_coordenadas	*pop(t_coordenadas **coordenadas)
+{
+	t_coordenadas	*pop;
+
+	pop = NULL;
+	if (coordenadas && *coordenadas)
+	{
+		pop = *coordenadas;
+		*coordenadas = (*coordenadas)->next;
+	}
+	return (pop);
+}
+
 int	ft_abs_value(int value)
 {
 	if (value < 0)
