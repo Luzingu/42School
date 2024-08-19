@@ -12,7 +12,7 @@
 
 #include "../includes/minitalk.h"
 
-int	sinalizador;
+int	g_sinalizador;
 
 int	is_number(char *argv)
 {
@@ -44,16 +44,16 @@ void	send_bits(pid_t pid, unsigned char c)
 		else
 			kill(pid, SIGUSR2);
 		i--;
-		while (!sinalizador)
+		while (!g_sinalizador)
 			;
-		sinalizador = 0;
+		g_sinalizador = 0;
 	}
 }
 
 void	handle_signal(int sinal)
 {
-    (void)sinal;
-	sinalizador = 1;
+	(void)sinal;
+	g_sinalizador = 1;
 }
 
 int	correct_input(int argc, char **argv)
@@ -78,6 +78,7 @@ int	main(int argc, char **argv)
 {
 	pid_t				pid;
 	int					i;
+
 	signal(SIGUSR1, handle_signal);
 	if (correct_input(argc, argv))
 	{
