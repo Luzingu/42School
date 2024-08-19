@@ -3,12 +3,13 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gecarval <gecarval@student.42.fr>          +#+  +:+       +#+         #
+#    By: aluzingu <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/06/12 10:18:00 by gecarval          #+#    #+#              #
-#    Updated: 2024/06/13 20:50:02 by gecarval         ###   ########.fr        #
+#    Created: 2024/08/19 16:55:14 by aluzingu          #+#    #+#              #
+#    Updated: 2024/08/19 16:55:16 by aluzingu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 NAME = minitalk
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
