@@ -12,6 +12,8 @@
 
 #include "../includes/minitalk.h"
 
+int	sinalizador;
+
 int	is_number(char *argv)
 {
 	int	i;
@@ -42,22 +44,30 @@ void	send_bits(pid_t pid, unsigned char c)
 		else
 			kill(pid, SIGUSR2);
 		i--;
-		usleep(60);
+		while (!sinalizador)
+			;
+		sinalizador = 0;
 	}
+}
+
+void	handle_signal(int sinal)
+{
+    (void)sinal;
+	sinalizador = 1;
 }
 
 int	correct_input(int argc, char **argv)
 {
 	if (argc != 3)
 	{
-		ft_printf("Usage: ./client PID message");
+		ft_printf("Usage: ./client PID message\n");
 		return (0);
 	}
 	else
 	{
 		if (!is_number(argv[1]))
 		{
-			ft_printf("PID Invalid");
+			ft_printf("PID Invalid\n");
 			return (0);
 		}
 	}
@@ -68,7 +78,7 @@ int	main(int argc, char **argv)
 {
 	pid_t				pid;
 	int					i;
-
+	signal(SIGUSR1, handle_signal);
 	if (correct_input(argc, argv))
 	{
 		pid = ft_atoi(argv[1]);

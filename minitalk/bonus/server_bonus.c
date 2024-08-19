@@ -30,7 +30,8 @@ void	handle_signal(int sinal, siginfo_t *info, void *contexto)
 		if (character == '\0')
 		{
 			write(1, "\n", 1);
-			kill(info->si_pid, SIGUSR1);
+			kill(info->si_pid, SIGUSR2);
+			ft_printf("Mensagem Recebida de %d\n", info->si_pid);
 		}
 		else
 			write(1, &character, 1);
@@ -38,7 +39,8 @@ void	handle_signal(int sinal, siginfo_t *info, void *contexto)
 		contador = 0;
 	}
 	else
-		contador++;
+	    contador++;
+	kill(info->si_pid, SIGUSR1);
 }
 
 int	main(void)

@@ -35,7 +35,8 @@ void	handle_signal(int sinal, siginfo_t *info, void *contexto)
 		contador = 0;
 	}
 	else
-		contador++;
+	    contador++;
+	kill(info->si_pid, SIGUSR1);
 }
 
 int	main(void)

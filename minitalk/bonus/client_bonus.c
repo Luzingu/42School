@@ -12,6 +12,8 @@
 
 #include "../includes/minitalk_bonus.h"
 
+int	sinalizador;
+
 int	is_number(char *argv)
 {
 	int	i;
@@ -42,28 +44,32 @@ void	send_bits(pid_t pid, unsigned char c)
 		else
 			kill(pid, SIGUSR2);
 		i--;
-		usleep(60);
+		while (!sinalizador)
+			;
+		sinalizador = 0;
 	}
 }
 
 void	handle_signal(int sinal)
 {
-	if (sinal == SIGUSR1)
-		ft_printf("SERVER: A tua mensagem foi recebida com sucesso.");
+        if (sinal == SIGUSR1)
+	  sinalizador = 1;
+	else
+	  ft_printf("Mensagem recebida com sucesso.\n");
 }
 
 int	correct_input(int argc, char **argv)
 {
 	if (argc != 3)
 	{
-		ft_printf("Usage: ./client PID message");
+		ft_printf("Usage: ./client PID message\n");
 		return (0);
 	}
 	else
 	{
 		if (!is_number(argv[1]))
 		{
-			ft_printf("PID Invalid");
+			ft_printf("PID Invalid\n");
 			return (0);
 		}
 	}
@@ -72,12 +78,10 @@ int	correct_input(int argc, char **argv)
 
 int	main(int argc, char **argv)
 {
-	struct sigaction	sa;
 	pid_t				pid;
 	int					i;
-
-	sa.sa_handler = handle_signal;
-	sigaction(SIGUSR1, &sa, NULL);
+	signal(SIGUSR1, handle_signal);
+	signal(SIGUSR2, handle_signal);
 	if (correct_input(argc, argv))
 	{
 		pid = ft_atoi(argv[1]);
@@ -88,6 +92,7 @@ int	main(int argc, char **argv)
 			i++;
 		}
 		send_bits(pid, '\0');
+		ft_printf("CLIENT PID: %d\n", getpid());
 	}
 	return (0);
 }
