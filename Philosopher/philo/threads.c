@@ -19,7 +19,7 @@ void  *funcion(void *arg)
   pthread_mutex_unlock(&control);
   return NULL;
 }
-
+ 
 int main(void)
 {
   pthread_t thread1;

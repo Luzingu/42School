@@ -6,14 +6,16 @@
 #    By: aluzingu <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/21 08:18:20 by aluzingu          #+#    #+#              #
-#    Updated: 2024/08/21 11:43:05 by aluzingu         ###   ########.fr        #
+#    Updated: 2024/08/23 08:17:11 by aluzingu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
 SRC = src/main.c\
-	src/utils.c
+	src/utils.c\
+	src/init.c \
+	src/philosopher.c
 
 OBJS = $(SRC:.c=.o)
 
