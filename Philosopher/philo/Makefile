@@ -6,7 +6,7 @@
 #    By: aluzingu <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/21 08:18:20 by aluzingu          #+#    #+#              #
-#    Updated: 2024/08/23 08:17:11 by aluzingu         ###   ########.fr        #
+#    Updated: 2024/08/24 18:35:28 by aluzingu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ NAME = philo
 SRC = src/main.c\
 	src/utils.c\
 	src/init.c \
-	src/philosopher.c
+	src/philosopher.c \
+	src/monitor.c
 
 OBJS = $(SRC:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: aluzingu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 08:05:01 by aluzingu          #+#    #+#             */
-/*   Updated: 2024/08/24 14:04:37 by aluzingu         ###   ########.fr       */
+/*   Updated: 2024/08/25 04:55:18 by aluzingu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,10 @@ int main(int argc, char **argv)
     if(ft_check_input(argc, argv))
     { 
         ft_init_programa(argc, &programa, argv);
-        philos = ft_init_philos(programa);
-        philosopher(programa, philos);
-        int i;
-        i = -1;
-        while (++i < philos->programa->number)
-            pthread_join(philos[i].thread, NULL);
-
-        for (int i = 0; i < philos->programa->number; i++)
-            pthread_mutex_destroy(&programa.forks[i]);
-        free(programa.forks);
-        free(philos);
+        philos = ft_init_philos(&programa);
+        philosopher(&programa, philos);        
+       //free(philos);
+       //free(&programa);
                         
     }
     return (0);
