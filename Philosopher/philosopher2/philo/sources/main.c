@@ -6,7 +6,7 @@
 /*   By: aluzingu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 11:46:06 by mcombeau          #+#    #+#             */
-/*   Updated: 2024/08/25 06:36:54 by aluzingu         ###   ########.fr       */
+/*   Updated: 2024/08/27 13:15:06 by aluzingu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static bool	start_simulation(t_table *table)
 				&philosopher, table->philos[i]) != 0)
 			return (error_failure(STR_ERR_THREAD, NULL, table));
 		i++;
-	} 
+	}
 	if (table->nb_philos > 1)
 	{
 		if (pthread_create(&table->grim_reaper, NULL,
@@ -71,7 +71,7 @@ int	main(int ac, char **av)
 		return (msg(STR_USAGE, NULL, EXIT_FAILURE));
 	if (!is_valid_input(ac, av))
 		return (EXIT_FAILURE);
-	table = init_table(ac, av, 1);
+	table = init_table(ac, av, 1); 
 	if (!table)
 		return (EXIT_FAILURE);
 	if (!start_simulation(table))

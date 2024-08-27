@@ -6,30 +6,11 @@
 /*   By: aluzingu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 08:13:42 by aluzingu          #+#    #+#             */
-/*   Updated: 2024/08/25 04:45:03 by aluzingu         ###   ########.fr       */
+/*   Updated: 2024/08/27 11:05:17 by aluzingu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
-
-long long current_time(void)
-{
-    struct timeval tv;
-    gettimeofday(&tv, NULL);
-    return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
-}
- 
-int	check_good(t_programa *programa)
-{
-	pthread_mutex_lock(&programa->m_good);
-	if (!programa->good)
-	{
-		pthread_mutex_unlock(&programa->m_good);
-		return (1);
-	}
-	pthread_mutex_unlock(&programa->m_good);
-	return (0);
-}
 
 void    ft_putchar(char c)
 {
@@ -63,22 +44,4 @@ int ft_atoi(char *str)
         i++;
     }
     return (number);
-}
-
-void	ft_usleep(t_programa *programa, int stop_ms)
-{
-	long long	end_ms;
-
-	end_ms = current_time() + stop_ms;
-	while (current_time() < end_ms)
-	{
-		pthread_mutex_lock(&programa->m_good);
-		if (programa->good != 1)
-		{
-			pthread_mutex_unlock(&programa->m_good);
-			return ;
-		}
-		pthread_mutex_unlock(&programa->m_good);
-		usleep(100);
-	}
 }

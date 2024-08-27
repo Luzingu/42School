@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   grim_reaper.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcombeau <mcombeau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aluzingu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 12:00:18 by mcombeau          #+#    #+#             */
-/*   Updated: 2022/09/10 15:05:19 by mcombeau         ###   ########.fr       */
+/*   Updated: 2024/08/27 13:15:07 by aluzingu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static bool	kill_philo(t_philo *philo)
 	{
 		set_sim_stop_flag(philo->table, true);
 		write_status(philo, true, DIED);
-		pthread_mutex_unlock(&philo->meal_time_lock);
+		pthread_mutex_unlock(&philo->meal_time_lock); 
 		return (true);
 	}
 	return (false);
@@ -97,7 +97,7 @@ static bool	end_condition_reached(t_table *table)
 	}
 	return (false);
 }
-
+  
 /* grim_reaper:
 *	The grim reaper thread's routine. Checks if a philosopher must
 *	be killed and if all philosophers ate enough. If one of those two
@@ -111,7 +111,7 @@ void	*grim_reaper(void *data)
 	if (table->must_eat_count == 0)
 		return (NULL);
 	set_sim_stop_flag(table, false);
-	sim_start_delay(table->start_time);
+	sim_start_delay(table->start_time); 
 	while (true)
 	{
 		if (end_condition_reached(table) == true)

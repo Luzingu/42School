@@ -6,7 +6,7 @@
 /*   By: aluzingu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 08:05:01 by aluzingu          #+#    #+#             */
-/*   Updated: 2024/08/25 04:55:18 by aluzingu         ###   ########.fr       */
+/*   Updated: 2024/08/27 11:32:34 by aluzingu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,22 @@ int ft_check_input(int argc, char **argv)
 
 int main(int argc, char **argv)
 {
-    t_programa  programa;
-    t_philo *philos;
+    t_programa  *programa;
 
+    programa = NULL;
     if(ft_check_input(argc, argv))
-    { 
-        ft_init_programa(argc, &programa, argv);
-        philos = ft_init_philos(&programa);
-        philosopher(&programa, philos);        
-       //free(philos);
-       //free(&programa);
+    {  
+        programa = ft_init_programa(argc, argv); 
+        philosopher(programa);
+
+        int i = 0;
+        while (i < programa->number)
+        {
+            pthread_join(programa->philos[i]->thread, NULL);
+            i++;
+        }
+        if (programa->number > 1)
+            pthread_join(programa->grim_reaper, NULL);
                         
     }
     return (0);

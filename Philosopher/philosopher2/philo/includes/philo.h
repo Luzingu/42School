@@ -6,7 +6,7 @@
 /*   By: aluzingu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 11:46:01 by mcombeau          #+#    #+#             */
-/*   Updated: 2024/08/25 06:36:52 by aluzingu         ###   ########.fr       */
+/*   Updated: 2024/08/27 06:28:45 by aluzingu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,6 @@ bool			has_simulation_stopped(t_table *table);
 //	exit.c
 int				error_failure(char *str, char *details, t_table *table);
 void			*free_table(t_table *table);
-void			destroy_mutexes(t_table *table);
+void			destroy_mutexes(t_table *table); 
 
 #endif

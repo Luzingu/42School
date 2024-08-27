@@ -6,7 +6,7 @@
 #    By: aluzingu <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/21 08:18:20 by aluzingu          #+#    #+#              #
-#    Updated: 2024/08/24 18:35:28 by aluzingu         ###   ########.fr        #
+#    Updated: 2024/08/27 10:06:27 by aluzingu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,9 @@ SRC = src/main.c\
 	src/utils.c\
 	src/init.c \
 	src/philosopher.c \
-	src/monitor.c
+	src/time.c\
+	src/some_funcion.c\
+	src/grim_reaper.c
 
 OBJS = $(SRC:.c=.o)
 
