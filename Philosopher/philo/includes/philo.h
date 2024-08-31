@@ -23,10 +23,10 @@
 typedef struct s_programa
 {
 	struct s_philo	*philos;
-	time_t	time_to_die;
-	time_t	time_to_eat;
-	time_t	time_to_sleep;
-	time_t	start_time;
+	time_t		time_to_die;
+	time_t		time_to_eat;
+	time_t		time_to_sleep;
+	time_t		start_time;
 	int		stop;
 	int		max_ate;
 	int		number;

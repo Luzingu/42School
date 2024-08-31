@@ -26,7 +26,7 @@ void	ft_putstr(char *str)
 	}
 }
 
-int		ft_atoi(char *str)
+int	ft_atoi(char *str)
 {
 	int	i;
 	int	number;
@@ -45,4 +45,3 @@ int		ft_atoi(char *str)
 	}
 	return (number);
 }
-

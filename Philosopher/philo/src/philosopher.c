@@ -17,7 +17,8 @@ void	print_status(t_philo *philo, char *status)
 	pthread_mutex_lock(&philo->programa->write_lock);
 	if (!philo->programa->stop && !philo->programa->max_ate)
 	{
-		printf("%ld - Philo %d %s\n", current_time(philo->programa), (philo->position + 1), status);
+		printf("%ld - Philo %d %s\n", current_time(philo->programa),
+			(philo->position + 1), status);
 	}
 	pthread_mutex_unlock(&philo->programa->write_lock);
 }
@@ -57,7 +58,8 @@ void	philo_dead(t_programa *programa, t_philo *philo)
 		while (++i < programa->number && !programa->stop)
 		{
 			pthread_mutex_lock(&programa->eating);
-			if (programa->time_to_die < (current_time(programa) - philo[i].last_eaten))
+			if (programa->time_to_die
+				< (current_time(programa) - philo[i].last_eaten))
 			{
 				print_status(&philo[i], "died");
 				programa->stop = 1;
