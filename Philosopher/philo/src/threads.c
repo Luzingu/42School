@@ -6,7 +6,7 @@
 /*   By: aluzingu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 16:21:32 by aluzingu          #+#    #+#             */
-/*   Updated: 2024/08/30 22:01:40 by aluzingu         ###   ########.fr       */
+/*   Updated: 2024/08/31 03:43:06 by aluzingu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,15 @@ void	*routine(void *arg)
 	philo = (t_philo *)arg;
 	programa = philo->programa;
 	if (programa->number == 1)
-		return (lone_philo_routine(philo));
+		return (lone_philo_routime(philo));
 	if (philo->position % 2 && programa->number > 1)
 		philo_us_sleep(programa, programa->time_to_eat / 50);
 	while (!programa->stop && !programa->max_ate)
 	{
 		philo_eat(philo);
-		print_status(philo, "is sleeping...", false);
+		print_status(philo, "is sleeping...");
 		philo_us_sleep(philo->programa, philo->programa->time_to_sleep);
-		print_status(philo, "is thinking...", false);
+		print_status(philo, "is thinking...");
 	}
 	return (NULL);
 }
@@ -58,12 +58,11 @@ void	philosopher(t_programa *programa)
 	programa->start_time = current_time_in_ms();
 	while (i < programa->number)
 	{
-		programa->philos[i].last_eaten = current_time_in_ms();
+		programa->philos[i].last_eaten = 0;
 		pthread_create(&programa->philos[i].thread, NULL,
 			routine, &programa->philos[i]);
 		i++;
 	}
 	philo_dead(programa, programa->philos);
-	pthread_mutex_unlock(&programa->write_lock);
 	exit_threads(programa);
 }

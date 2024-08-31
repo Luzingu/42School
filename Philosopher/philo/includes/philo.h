@@ -6,7 +6,7 @@
 /*   By: aluzingu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 08:03:21 by aluzingu          #+#    #+#             */
-/*   Updated: 2024/08/30 22:02:25 by aluzingu         ###   ########.fr       */
+/*   Updated: 2024/08/31 03:42:49 by aluzingu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void    ft_putstr(char *str);
 void	philosopher(t_programa *programa);
 void	philo_us_sleep(t_programa *programa, time_t sleep_time);
 void    philo_eat(t_philo *philo);
-void    print_status(t_philo *philo, char *status, bool died);
+void    print_status(t_philo *philo, char *status);
 void    philo_dead(t_programa *programa, t_philo *philo);
 void    *lone_philo_routime(t_philo *philo);
 
