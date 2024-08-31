@@ -6,7 +6,7 @@
 /*   By: aluzingu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 08:00:44 by aluzingu          #+#    #+#             */
-/*   Updated: 2024/08/27 12:54:13 by aluzingu         ###   ########.fr       */
+/*   Updated: 2024/08/30 21:33:42 by aluzingu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,15 @@
 void    print_status(t_philo *philo, char *status, bool died)
 {
     time_t diff;
-    
-    pthread_mutex_lock(&philo->programa->write_lock);
-    if (has_simulation_stopped(philo->programa) == true && died == false)
-    {
-        pthread_mutex_unlock(&philo->programa->write_lock);
-        return ;
-    }    
-    diff = current_time() - philo->programa->start_time;
 
-    printf("%ld - Philo %d %s \n", diff, (philo->position + 1), status);
-    pthread_mutex_unlock(&philo->programa->write_lock);
+    diff = current_time_in_ms() - philo->programa->start_time;
+    pthread_mutex_lock(&philo->programa->write_lock);
+    if (!philo->programa->stop && !philo->programa->max_ate) 
+    {
+        printf("%ld - Philo %d %s \n", diff, (philo->position + 1), status);
+    } 
+    if (!died)
+        pthread_mutex_unlock(&philo->programa->write_lock);
 }
 
 void    *lone_philo_routime(t_philo *philo)
@@ -38,84 +36,44 @@ void    *lone_philo_routime(t_philo *philo)
     return (NULL);
 }
 
-void    thik_routime(t_philo *philo, bool silent)
-{
-    time_t  time_to_think;
-
-    pthread_mutex_lock(&philo->eating);
-        time_to_think = (philo->programa->time_to_die - (current_time() - philo->last_eaten) - philo->programa->time_to_eat) / 2;
-    pthread_mutex_unlock(&philo->eating);
-    if (time_to_think < 0)
-        time_to_think = 0;
-    if (time_to_think == 0 && silent == true)
-        time_to_think = 1;
-    if (time_to_think > 600)
-        time_to_think = 200;
-    if (silent == false)
-        print_status(philo, "is thinking...", false);
-    philo_us_sleep(philo->programa, time_to_think);
-}
-
-void    eat_sleep_routime(t_philo *philo)
+void    philo_eat(t_philo *philo)
 {
     pthread_mutex_lock(&philo->programa->forks_locks[philo->fork_left]);
     print_status(philo, "has taken a fork...", false);
     pthread_mutex_lock(&philo->programa->forks_locks[philo->fork_right]);
     print_status(philo, "has taken a fork...", false);
+    pthread_mutex_lock(&philo->programa->eating);
     print_status(philo, "is eating...", false);
-    pthread_mutex_lock(&philo->eating);
-    philo->last_eaten = current_time();
-    pthread_mutex_unlock(&philo->eating);
+    philo->last_eaten = current_time_in_ms();
+    pthread_mutex_unlock(&philo->programa->eating);
     philo_us_sleep(philo->programa, philo->programa->time_to_eat);
-    if (has_simulation_stopped(philo->programa) == false)
-    {
-        pthread_mutex_lock(&philo->eating);
-        philo->times_eaten++;
-        pthread_mutex_unlock(&philo->eating);
-    }
-    print_status(philo, "is sleeping...", false);
+    philo->times_eaten++;
     pthread_mutex_unlock(&philo->programa->forks_locks[philo->fork_left]);
     pthread_mutex_unlock(&philo->programa->forks_locks[philo->fork_right]);
-    philo_us_sleep(philo->programa, philo->programa->time_to_sleep);
 }
 
-void    *philo_action(void *arg)
-{
-    t_philo *philo;
-
-    philo = (t_philo *)arg;
-    
-    if (philo->programa->must_eat_count == 0)
-        return (NULL);
-    pthread_mutex_lock(&philo->eating);
-    philo->last_eaten = philo->programa->start_time;
-    pthread_mutex_unlock(&philo->eating);
-    sim_start_delay(philo->programa->start_time);
-    if (philo->programa->time_to_die == 0)
-        return (NULL);
-    if (philo->programa->number == 1)
-        return lone_philo_routime(philo);
-    else if (philo->position % 2 == 1)
-        thik_routime(philo, true);
-    while (has_simulation_stopped(philo->programa) == false)
-    {
-        eat_sleep_routime(philo);
-        thik_routime(philo, false);
-    }
-    return (NULL);
-}
-
-void    philosopher(t_programa *programa)
+void    philo_dead(t_programa *programa, t_philo *philo)
 {
     int i;
 
-    programa->start_time = current_time() + (programa->number * 2 * 10);
-    i = 0;
-    while (i < programa->number)
+    while(!programa->max_ate)
     {
-        pthread_create(&programa->philos[i]->thread, NULL, philo_action, programa->philos[i]);
-        i++;
+        i = -1;
+        while (++i < programa->number && !programa->stop)
+        {
+            pthread_mutex_lock(&programa->eating);
+            if((int)(current_time_in_ms() - philo[i].last_eaten) >= programa->time_to_die)
+            {
+                print_status(&philo[i], "diead", true);
+                programa->stop = 1;
+            }
+            pthread_mutex_unlock(&programa->eating);
+        }
+        if (programa->stop)
+            break ;
+        i = 0;
+        while (programa->must_eat_count && i < programa->number && philo[i].times_eaten >= programa->must_eat_count)
+            i++;
+        programa->max_ate = (i == programa->number);
     }
-    if (programa->number > 1)
-        pthread_create(&programa->grim_reaper, NULL, grim_reaper, programa);
 }

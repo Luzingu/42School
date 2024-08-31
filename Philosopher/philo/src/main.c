@@ -6,7 +6,7 @@
 /*   By: aluzingu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 08:05:01 by aluzingu          #+#    #+#             */
-/*   Updated: 2024/08/27 11:32:34 by aluzingu         ###   ########.fr       */
+/*   Updated: 2024/08/30 22:00:05 by aluzingu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,11 @@ int main(int argc, char **argv)
     programa = NULL;
     if(ft_check_input(argc, argv))
     {  
-        programa = ft_init_programa(argc, argv); 
-        philosopher(programa);
-
-        int i = 0;
-        while (i < programa->number)
-        {
-            pthread_join(programa->philos[i]->thread, NULL);
-            i++;
-        }
-        if (programa->number > 1)
-            pthread_join(programa->grim_reaper, NULL);
-                        
-    }
+        programa = ft_init_programa(argc, argv);
+        if(!programa)
+            printf("Init Error\n");
+        else
+            philosopher(programa);            
+    } 
     return (0);
 }

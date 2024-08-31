@@ -6,68 +6,87 @@
 /*   By: aluzingu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 04:54:41 by aluzingu          #+#    #+#             */
-/*   Updated: 2024/08/27 12:43:00 by aluzingu         ###   ########.fr       */
+/*   Updated: 2024/08/30 22:03:22 by aluzingu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-pthread_mutex_t *ft_init_forks(t_programa *programa)
+int ft_init_mutex(t_programa *programa)
 {
-    pthread_mutex_t *forks;
     int i;
 
-    forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * programa->number);
-    if (!forks)
-        return (NULL);
+    if (!programa->forks_locks)
+        return (0);
+
     i = 0;
     while (i < programa->number)
     {
-        pthread_mutex_init(&forks[i], NULL);
+        if (pthread_mutex_init(&programa->forks_locks[i], NULL))
+            return (0);
         i++;
     }
-    return (forks);
+    if (pthread_mutex_init(&programa->write_lock, NULL))
+        return (0);
+    if (pthread_mutex_init(&programa->eating, NULL))
+        return (0);
+    return (1);
 }
 
-t_philo    **ft_init_philos(t_programa *programa)
+int ft_init_philos(t_programa *programa)
 {
-    t_philo **philos;
     int i;
 
+    if (!programa->philos)
+        return (0);
+
     i = 0;
-    philos = (t_philo **)malloc(sizeof(t_philo) * programa->number);
-    if (!philos)
-        return (NULL);
     while (i < programa->number)
     {
-        philos[i] = (t_philo *)malloc(sizeof(t_philo) * 1);
-        if (!philos[i])
-            return (NULL);
-        pthread_mutex_init(&philos[i]->eating, NULL);
-        philos[i]->position = i;
-        philos[i]->times_eaten = 0;
-        philos[i]->fork_left = i;
-        philos[i]->fork_right = (i + 1) % programa->number;
-        if (i % 2 == 0)
-        {
-            philos[i]->fork_right = i;
-            philos[i]->fork_left = (i + 1) % programa->number;
-        }
-        philos[i]->programa = programa;
+        programa->philos[i].position = i;
+        programa->philos[i].times_eaten = 0;
+        programa->philos[i].fork_left = i;
+        programa->philos[i].fork_right = (i + 1) % programa->number;
+        programa->philos[i].programa = programa;
         i++;
     }
-    return (philos);
+    return (1);
 }
+
+int ft_init(t_programa *programa)
+{
+    if (!(programa->philos = (t_philo *)malloc(sizeof(t_philo) * programa->number)))
+        return (0);
+    if (!(programa->forks_locks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * programa->number)))
+    {
+        free(programa->philos);
+        return (0);
+    }
+    if (!ft_init_mutex(programa))
+    {
+        free(programa->philos);
+        free(programa->forks_locks);
+        return (0);
+    }
+    if (!ft_init_philos(programa))
+    {
+        free(programa->philos);
+        free(programa->forks_locks);
+        return (0);
+    }
+    return (1);
+}
+
 
 t_programa *ft_init_programa(int argc, char **argv)
 {
     t_programa  *programa;
     int i;
 
-    programa = (t_programa *)malloc(sizeof(t_programa) * 1);
+    programa = (t_programa *)malloc(sizeof(t_programa));
     if (!programa)
         return (NULL);
-    i = -1;
+    i = 0;
     if(argc == 6)
         i = ft_atoi(argv[5]);
     programa->number = ft_atoi(argv[1]);
@@ -75,12 +94,9 @@ t_programa *ft_init_programa(int argc, char **argv)
     programa->time_to_eat = ft_atoi(argv[3]);
     programa->time_to_sleep = ft_atoi(argv[4]);
     programa->must_eat_count = i;
-    programa->stop = false;
-    programa->philos = ft_init_philos(programa);
-    programa->forks_locks = ft_init_forks(programa);
-    if(!programa->forks_locks)
+    programa->stop = 0;
+    programa->max_ate = 0;
+    if (!ft_init(programa))
         return (NULL);
-    pthread_mutex_init(&programa->write_lock, NULL);
-    pthread_mutex_init(&programa->stop_lock, NULL);
-    return (programa);
+    return programa;
 }
