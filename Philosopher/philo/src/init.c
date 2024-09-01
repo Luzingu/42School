@@ -29,6 +29,10 @@ int	ft_init_mutex(t_programa *programa)
 		return (0);
 	if (pthread_mutex_init(&programa->eating, NULL))
 		return (0);
+	if (pthread_mutex_init(&programa->set_value, NULL))
+		return (0);
+	if (pthread_mutex_init(&programa->get_value, NULL))
+		return (0);
 	return (1);
 }
 
@@ -53,6 +57,8 @@ int	ft_init_philos(t_programa *programa)
 
 int	ft_init(t_programa *programa)
 {
+	if(programa->number > 200 || programa->time_to_eat < 60 || programa->time_to_sleep < 60 || programa->time_to_die < 60)
+		return (0);
 	programa->philos = (t_philo *)malloc(sizeof(t_philo) * programa->number);
 	if (!programa->philos)
 		return (0);

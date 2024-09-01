@@ -19,11 +19,11 @@ void	*routine(void *arg)
 
 	philo = (t_philo *)arg;
 	programa = philo->programa;
-	if (programa->number == 1)
+	if (get_number(programa) == 1)
 		return (lone_philo_routime(philo));
-	if (philo->position % 2 && programa->number > 1)
-		philo_us_sleep(programa, programa->time_to_eat / 50);
-	while (!programa->stop && !programa->max_ate)
+	else if (philo->position % 2)
+		philo_us_sleep(programa, get_time_to_eat(programa) / 50);
+	while (!get_stop(programa) && !get_max_ate(programa))
 	{
 		philo_eat(philo);
 		print_status(philo, "is sleeping...");
@@ -38,10 +38,10 @@ void	exit_threads(t_programa *programa)
 	int	i;
 
 	i = -1;
-	while (++i < programa->number)
+	while (++i < get_number(programa))
 		pthread_join(programa->philos[i].thread, NULL);
 	i = -1;
-	while (++i < programa->number)
+	while (++i < get_number(programa))
 		pthread_mutex_destroy(&programa->forks_locks[i]);
 	pthread_mutex_destroy(&programa->eating);
 	pthread_mutex_destroy(&programa->write_lock);
@@ -56,7 +56,7 @@ void	philosopher(t_programa *programa)
 
 	i = 0;
 	programa->start_time = current_time_in_ms();
-	while (i < programa->number)
+	while (i < get_number(programa))
 	{
 		programa->philos[i].last_eaten = 0;
 		pthread_create(&programa->philos[i].thread, NULL,

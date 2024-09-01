@@ -35,6 +35,8 @@ typedef struct s_programa
 	pthread_mutex_t	*forks_locks;
 	pthread_mutex_t	write_lock;
 	pthread_mutex_t	eating;
+	pthread_mutex_t	get_value;
+	pthread_mutex_t	set_value;
 }	t_programa;
  
 typedef struct s_philo
@@ -49,6 +51,13 @@ typedef struct s_philo
 }	t_philo;
 
 int		ft_atoi(char *str);
+int 	get_number(t_programa *programa);
+int		get_stop(t_programa *programa);
+int		get_max_ate(t_programa *programa);
+int		get_time_to_die(t_programa *programa);
+int		get_position(t_philo *philo);
+int		get_must_eat_count(t_programa *programa);
+int		get_time_to_eat(t_programa *programa);
 
 time_t	current_time_in_ms(void);
 time_t	current_time(t_programa *programa);

@@ -17,7 +17,8 @@ SRC = src/main.c\
 	src/init.c \
 	src/philosopher.c \
 	src/time.c\
-	src/threads.c
+	src/threads.c\
+	src/get_values.c
 
 OBJS = $(SRC:.c=.o)
 

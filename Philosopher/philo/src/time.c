@@ -30,10 +30,10 @@ void	philo_us_sleep(t_programa *programa, time_t sleep_time)
 	time_t	start;
 
 	start = current_time_in_ms();
-	while (!programa->stop)
+	while (!get_stop(programa))
 	{
 		if (current_time_in_ms() - start >= sleep_time)
 			break ;
-		usleep(programa->number * 2);
+		usleep(get_number(programa) * 2);
 	}
 }

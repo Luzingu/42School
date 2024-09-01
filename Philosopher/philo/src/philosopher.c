@@ -15,7 +15,7 @@
 void	print_status(t_philo *philo, char *status)
 {
 	pthread_mutex_lock(&philo->programa->write_lock);
-	if (!philo->programa->stop && !philo->programa->max_ate)
+	if (!get_stop(philo->programa) && !get_max_ate(philo->programa))
 	{
 		printf("%ld - Philo %d %s\n", current_time(philo->programa),
 			(philo->position + 1), status);
@@ -27,7 +27,7 @@ void	*lone_philo_routime(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->programa->forks_locks[philo->fork_right]);
 	print_status(philo, "has taken a fork...");
-	philo_us_sleep(philo->programa, philo->programa->time_to_die);
+	philo_us_sleep(philo->programa, get_time_to_die(philo->programa));
 	pthread_mutex_unlock(&philo->programa->forks_locks[philo->fork_right]);
 	return (NULL);
 }
@@ -52,26 +52,28 @@ void	philo_dead(t_programa *programa, t_philo *philo)
 {
 	int	i;
 
-	while (!programa->max_ate)
+	while (!get_max_ate(programa))
 	{
 		i = -1;
-		while (++i < programa->number && !programa->stop)
+		while (++i < get_number(programa) && !get_stop(programa))
 		{
 			pthread_mutex_lock(&programa->eating);
-			if (programa->time_to_die
+			if (get_time_to_die(programa)
 				< (current_time(programa) - philo[i].last_eaten))
 			{
 				print_status(&philo[i], "died");
+				pthread_mutex_lock(&programa->get_value);
 				programa->stop = 1;
+				pthread_mutex_unlock(&programa->get_value);
 			}
 			pthread_mutex_unlock(&programa->eating);
 		}
-		if (programa->stop)
+		if (get_stop(programa))
 			break ;
 		i = 0;
-		while (programa->must_eat_count && i < programa->number
-			&& philo[i].times_eaten >= programa->must_eat_count)
+		while (get_must_eat_count(programa) && i < get_number(programa)
+			&& philo[i].times_eaten >= get_must_eat_count(programa))
 			i++;
-		programa->max_ate = (i == programa->number);
+		programa->max_ate = (i == get_number(programa));
 	}
 }
