@@ -30,7 +30,7 @@ class PhoneBook
 				}
 				else if(line == "SEARCH")
 				{
-					int i;
+					int i; 
 					i = 0;
 					std::cout << std::setw(11);
 					std::cout << "Index |";
