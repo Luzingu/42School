@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   megaphone.cpp                                      :+:      :+:    :+:   */
+/*   Zombie.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aluzingu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/11 12:25:45 by aluzingu          #+#    #+#             */
-/*   Updated: 2024/12/11 12:25:48 by aluzingu         ###   ########.fr       */
+/*   Created: 2024/12/11 14:56:04 by aluzingu          #+#    #+#             */
+/*   Updated: 2024/12/11 14:56:07 by aluzingu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 
-int main(int argc, char **argv)
+class Zombie
 {
-	if (argc > 1)
-	{
-		for (int i = 1; i < argc; i++)
-		{
-			for (int j = 0; argv[i][j] != '\0'; j++)
-				argv[i][j] = (char)toupper(argv[i][j]);
-			std::cout << argv[i];
-			if (argv[i] != NULL)
-				std::cout << " ";
-		}
-		std::cout << std::endl;
-	}
-	else
-		std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *" << std::endl;
-	return (0);
+	private:
+		std::string name;
+	public:
+		void announce( void );
+		void randomChump();
+		Zombie(std::string name);
+		~Zombie(void);
+		
 }

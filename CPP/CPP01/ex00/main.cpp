@@ -1,32 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   megaphone.cpp                                      :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aluzingu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/11 12:25:45 by aluzingu          #+#    #+#             */
-/*   Updated: 2024/12/11 12:25:48 by aluzingu         ###   ########.fr       */
+/*   Created: 2024/12/11 15:05:07 by aluzingu          #+#    #+#             */
+/*   Updated: 2024/12/11 15:05:08 by aluzingu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-
-int main(int argc, char **argv)
+int main()
 {
-	if (argc > 1)
-	{
-		for (int i = 1; i < argc; i++)
-		{
-			for (int j = 0; argv[i][j] != '\0'; j++)
-				argv[i][j] = (char)toupper(argv[i][j]);
-			std::cout << argv[i];
-			if (argv[i] != NULL)
-				std::cout << " ";
-		}
-		std::cout << std::endl;
-	}
-	else
-		std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *" << std::endl;
+	std::cout << "Ola Mundo...";
 	return (0);
 }

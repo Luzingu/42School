@@ -5,26 +5,26 @@
 #                                                     +:+ +:+         +:+      #
 #    By: aluzingu <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/12/11 12:27:42 by aluzingu          #+#    #+#              #
-#    Updated: 2024/12/11 12:27:44 by aluzingu         ###   ########.fr        #
+#    Created: 2024/12/11 14:55:36 by aluzingu          #+#    #+#              #
+#    Updated: 2024/12/11 14:55:38 by aluzingu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = account
+NAME = zombie
 
 CC = c++
 
-FLAGS = 
+FLAGS = -Werror -Wextra -Wall
 
-SRCS = Account.cpp \
-	tests.cpp
+SRC = main.cpp \
+	Zombie.cpp
 
-OBJS = $(SRCS.:cpp=.o)
+OBJS = $(SRC:.cpp=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(FLAGS) $(SRCS) -o $(NAME)
+	$(CC) $(FLAGS) $(SRC) -o $(NAME)
 
 clean:
 	rm -f $(OBJS)
