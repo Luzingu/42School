@@ -10,8 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "Zombie.hpp"
+
 int main()
 {
-	std::cout << "Ola Mundo...";
+	Zombie *newZombie;
+	newZombie = new Zombie("New Zombie");
+	newZombie->announce();
+	randomChump("Rando Zombie");
+	delete newZombie;
 	return (0);
 }
