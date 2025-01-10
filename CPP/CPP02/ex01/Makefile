@@ -5,33 +5,31 @@
 #                                                     +:+ +:+         +:+      #
 #    By: aluzingu <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/01/09 17:29:17 by aluzingu          #+#    #+#              #
-#    Updated: 2025/01/09 17:29:18 by aluzingu         ###   ########.fr        #
+#    Created: 2025/01/10 15:28:18 by aluzingu          #+#    #+#              #
+#    Updated: 2025/01/10 15:28:20 by aluzingu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	=	harlFilter
+NAME	=	canonical_form
 
 CC		=	c++
 
-FLAGS	=	-Werror -Wextra -Wall -std=c++98
+FLAGS	=	-Wall -Wextra -Werror -std=c++98
 
-SRCS	=	main.cpp\
-			Harl.cpp
+SRCS	=	main.cpp \
+			Fixed.cpp
 
 OBJS	=	$(SRCS:.cpp=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(FLAGS) $(OBJS) -o $(NAME)
+		$(CC) $(FLAGS) $(SRCS) -o $(NAME)
 
 clean:
-	rm -f $(OBJS)
+		rm -f $(OBJS)
 
 fclean: clean
-	rm -f $(NAME)
+		rm -f $(NAME)
 
-re: all fclean
-
-
+re: fclean all
