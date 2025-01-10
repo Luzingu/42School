@@ -5,27 +5,28 @@
 #                                                     +:+ +:+         +:+      #
 #    By: aluzingu <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/12/11 14:55:36 by aluzingu          #+#    #+#              #
-#    Updated: 2024/12/11 14:55:38 by aluzingu         ###   ########.fr        #
+#    Created: 2025/01/09 13:30:24 by aluzingu          #+#    #+#              #
+#    Updated: 2025/01/09 13:30:26 by aluzingu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = zombie
+NAME    =   un_violence
 
-CC = c++
+CC      =   c++
 
-FLAGS = -Werror -Wextra -Wall -std=c++98
+FLAGS   =   -Werror -Wextra -Wall -std=c++98
 
-SRC = main.cpp \
-	Zombie.cpp \
-	randomChump.cpp
+SRCS    =   main.cpp \
+            HumanA.cpp \
+            HumanB.cpp \
+            Weapon.cpp
 
-OBJS = $(SRC:.cpp=.o)
+OBJS    =   $(SRCS:.cpp=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(FLAGS) $(SRC) -o $(NAME)
+	$(CC) $(FLAGS) $(OBJS) -o $(NAME)
 
 clean:
 	rm -f $(OBJS)

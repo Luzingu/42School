@@ -5,27 +5,26 @@
 #                                                     +:+ +:+         +:+      #
 #    By: aluzingu <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/12/11 14:55:36 by aluzingu          #+#    #+#              #
-#    Updated: 2024/12/11 14:55:38 by aluzingu         ###   ########.fr        #
+#    Created: 2025/01/09 16:11:15 by aluzingu          #+#    #+#              #
+#    Updated: 2025/01/09 16:11:17 by aluzingu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = zombie
 
-CC = c++
+NAME    =   sed_losers
 
-FLAGS = -Werror -Wextra -Wall -std=c++98
+FLAGS   =   -Wall -Wextra -Werror -std=c++98
 
-SRC = main.cpp \
-	Zombie.cpp \
-	randomChump.cpp
+CC      =   c++
 
-OBJS = $(SRC:.cpp=.o)
+SRC     =   main.cpp
+
+OBJS    =   $(SRC:.cpp=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(FLAGS) $(SRC) -o $(NAME)
+	$(CC) $(FLAGS) $(OBJS) -o $(NAME)
 
 clean:
 	rm -f $(OBJS)
