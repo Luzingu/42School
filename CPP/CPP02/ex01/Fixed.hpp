@@ -14,18 +14,24 @@
 #define FIXED_HPP
 	
 	#include <iostream>
+	#include <cmath>
 
 	class Fixed
 	{
 		private:
-			int number;
-			static const int fractional_bits;
+			int fixed_point_value;
+    		static const int fractional_bits;
 		public:
 			Fixed();
 			Fixed(const Fixed &other);
 			~Fixed();
-			Fixed &operator=(const Fixed &other);
+			Fixed(const int intValue);
+			Fixed(const float floatValue);
+			float toFloat( void ) const;
+			int toInt( void ) const;
 			int getRawBits( void ) const;
 			void setRawBits( int const raw );
+			Fixed &operator=(const Fixed &other);
+		friend std::ostream &operator<<(std::ostream &out, const Fixed &fixed);
 	};
 #endif

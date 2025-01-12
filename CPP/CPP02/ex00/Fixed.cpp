@@ -12,7 +12,9 @@
 
 #include "Fixed.hpp"
 
-Fixed::Fixed():number(0)
+const int Fixed::fractional_bits = 8;
+
+Fixed::Fixed():fixed_number(0)
 {
 	std::cout << "Default constructor called" << std::endl;
 }
@@ -33,7 +35,7 @@ Fixed &Fixed::operator=(const Fixed &other)
 	std::cout << "Copy assignment operator called" << std::endl;
 	if (this != &other)
 	{
-		this->number = other.getRawBits();
+		this->fixed_number = other.getRawBits();
 	}
 	return *this;
 }
@@ -41,10 +43,10 @@ Fixed &Fixed::operator=(const Fixed &other)
 int Fixed::getRawBits(void) const
 {
 	std::cout << "getRawBits member function called" << std::endl;
-	return (this->number);
+	return (this->fixed_number);
 }
 
 void Fixed::setRawBits(int const raw)
 {
-	this->number = raw;
+	this->fixed_number = raw;
 }
