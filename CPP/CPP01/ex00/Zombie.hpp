@@ -27,4 +27,6 @@ class Zombie
 		Zombie(std::string name);
 		~Zombie(void);
 };
+
+Zombie* newZombie( std::string name );
 #endif

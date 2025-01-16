@@ -81,7 +81,7 @@ bool	Fixed::operator==(Fixed fixed) const
 
 bool	Fixed::operator!=(Fixed fixed) const
 {
-	return (this->toFloat() == fixed.toFloat());
+	return (this->toFloat() != fixed.toFloat());
 }
 
 float   Fixed::operator+(Fixed fixed) const

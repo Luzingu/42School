@@ -22,7 +22,7 @@ Weapon:: ~Weapon(void)
 	
 }
 
-std::string Weapon::getType()
+const std::string Weapon::getType()
 {
 	return (Weapon::type);
 }

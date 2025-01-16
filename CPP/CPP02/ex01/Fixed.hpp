@@ -20,7 +20,7 @@
 	{
 		private:
 			int fixed_point_value;
-    		static const int fractional_bits;
+    			static const int fractional_bits;
 		public:
 			Fixed();
 			Fixed(const Fixed &other);
@@ -32,6 +32,6 @@
 			int getRawBits( void ) const;
 			void setRawBits( int const raw );
 			Fixed &operator=(const Fixed &other);
-		friend std::ostream &operator<<(std::ostream &out, const Fixed &fixed);
 	};
+	std::ostream &operator<<(std::ostream &out, const Fixed &fixed);
 #endif

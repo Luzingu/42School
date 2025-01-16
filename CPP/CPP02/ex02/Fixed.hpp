@@ -20,7 +20,7 @@
 	{
 		private:
 			int fixed_point_value;
-    		static const int fractional_bits;
+    			static const int fractional_bits;
 		public:
 			Fixed();
 			Fixed(const Fixed &other);
@@ -50,6 +50,6 @@
 			static const Fixed &min(const Fixed &class1, const Fixed &class2);
 			static Fixed &max(Fixed &class1, Fixed &class2);
 			static const Fixed &max(const Fixed &class1, const Fixed &class2);
-		friend std::ostream &operator<<(std::ostream &out, const Fixed &fixed);
 	};
+	std::ostream &operator<<(std::ostream &out, const Fixed &fixed);
 #endif

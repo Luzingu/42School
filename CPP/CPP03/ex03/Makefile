@@ -1,11 +1,14 @@
-NAME	=	open
+NAME	=	diamond_trap
 
 CC		=	c++
 
 FLAGS	=	-Wall -Werror -Wextra -std=c++98
 
 SRCS	=	main.cpp \
-			ClapTrap.cpp
+			ClapTrap.cpp\
+			ScavTrap.cpp\
+			FragTrap.cpp\
+			DiamondTrap.cpp
 
 OBJS	= $(SRCS:.cpp=.o)
 
@@ -17,5 +20,7 @@ $(NAME): $(OBJS)
 clean:
 		rm -f $(OBJS)
 
-flclean: clean
-		flclean all
+fclean: clean
+		rm -f $(NAME)
+
+re: fclean all

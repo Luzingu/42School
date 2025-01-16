@@ -60,19 +60,15 @@ Harl::~Harl(void)
 void Harl::complain(std::string level)
 {
 	void (Harl::*ptr_fuctions[4])(void) = {&Harl::debug, &Harl::info, &Harl::warning, &Harl::error};
+	std::string levels[4] = {"DEBUG", "INFO", "WARNING", "ERROR"};
 
-	int int_level = -1;
-
-	if (level == "DEBUG")
-		int_level = 0;
-	else if (level == "INFO")
-		int_level = 1;
-	else if (level == "WARNING")
-		int_level = 2;
-	else if (level == "ERROR")
-		int_level = 3;
-
-	switch(int_level)
+	int i = -1;
+	while (++i < 4)
+	{
+		if(levels[i] == level)
+			break;
+	}
+	switch(i)
 	{
 		case 0:
 			(this->*ptr_fuctions[0])();

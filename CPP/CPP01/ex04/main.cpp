@@ -13,7 +13,8 @@
 #include <iostream>
 #include <fstream>
 
-std::string found_replace(std::string line, std::string found, std::string replace) {
+std::string found_replace(std::string line, std::string found, std::string replace)
+{
     std::string result;
     size_t pos = 0;
     size_t found_pos = line.find(found, pos);
@@ -28,9 +29,6 @@ std::string found_replace(std::string line, std::string found, std::string repla
     result += line.substr(pos);
     return (result);
 }
-
-
-
 
 int main(int argc, char **argv)
 {
