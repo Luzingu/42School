@@ -38,12 +38,12 @@ int	main(int argc, char **argv)
 		ft_exit(ctx, "Error\nInvalid number of arguments\n");
 	ft_init(ctx);
 	ctx->inst = mlx_init();
-	ft_read_file(argv[1], ctx);
 	ctx->move_speed = 0.2;
 	ctx->rot_speed = 0.2;
 	ctx->win = mlx_new_window(ctx->inst, WIDTH, HEIGHT, "Cub3D");
 	ctx->img = mlx_new_image(ctx->inst, WIDTH, HEIGHT);
 	ctx->data = mlx_get_data_addr(ctx->img, &ctx->bpp, &ctx->size_line, &ctx->endian);
+	ft_read_file(argv[1], ctx);
 	define_player_position(ctx);
 	draw(ctx);
 	ft_free_ctx(ctx);

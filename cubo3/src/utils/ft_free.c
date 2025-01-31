@@ -26,23 +26,32 @@ void    ft_free_split(char **argv)
 }
 
 
+
 void ft_free_ctx(t_context *ctx)
 {
-    /*ft_free((void **)&ctx->map.no);
-    ft_free((void **)&ctx->map.so);
-    ft_free((void **)&ctx->map.we);
-    ft_free((void **)&ctx->map.ea);*/
-
-    //ft_free((void **)&ctx->map.f);
-    //ft_free((void **)&ctx->map.c);
-    mlx_destroy_image(ctx->inst, ctx->img);
-    mlx_destroy_window(ctx->inst, ctx->win);
-    mlx_destroy_display(ctx->inst);
-    //ft_free((void **)&ctx->inst);
-    //ft_free((void **)&ctx->win);
-    ft_free((void **)&ctx->img);
-    ft_free((void **)&ctx);
+    if (ctx)
+    {
+        if (ctx->map.f)
+            ft_free((void **)&ctx->map.f);
+        if (ctx->map.c)
+            ft_free((void **)&ctx->map.c);
+        if (ctx->inst)
+        {
+            mlx_destroy_display(ctx->inst);
+            if (ctx->win)
+                mlx_destroy_window(ctx->inst, ctx->win);
+            if (ctx->img)
+                mlx_destroy_image(ctx->inst, ctx->img);
+        }
+        
+        ft_free((void **)&ctx->inst);
+        ft_free((void **)&ctx->win);
+        ft_free((void **)&ctx->img);
+        ft_free((void **)&ctx);
+    }
 }
+
+
 
 
 void ft_exit(t_context *ctx,  char *str)

@@ -22,7 +22,7 @@ void    print_sky_floor(t_context *ctx)
         while (x < WIDTH)
         {
             if (y < HEIGHT / 2)
-                my_mlx_pixel_put(ctx, x, y, rgb_to_hex(ctx->map.c ));
+                my_mlx_pixel_put(ctx, x, y, rgb_to_hex(ctx->map.c));
             else
                 my_mlx_pixel_put(ctx, x, y, rgb_to_hex(ctx->map.f));
             x++;
