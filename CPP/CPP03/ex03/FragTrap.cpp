@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   FragTrap.cpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aluzingu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/27 11:12:35 by aluzingu          #+#    #+#             */
+/*   Updated: 2025/01/27 11:12:36 by aluzingu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "FragTrap.hpp"
 
 FragTrap::FragTrap(): ClapTrap()
@@ -33,10 +45,10 @@ FragTrap &FragTrap::operator=(const FragTrap &src)
 	this->hit_points = src.hit_points;
 	this->energy_points = src.energy_points;
 	this->atack_demage = src.atack_demage;
-	return *this;
+	return (*this);
 }
 
 void	FragTrap::highFiveGuys(void)
 {
-	std::cout << "FragTrap " << this->name << ": You want a high five?\n\t*WHAMM*\nHere you go." << std::endl;
+	std::cout << "FragTrap " << this->name << ": You want a high five? Here you go." << std::endl;
 }

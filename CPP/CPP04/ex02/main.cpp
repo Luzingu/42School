@@ -1,6 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aluzingu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/29 10:27:13 by aluzingu          #+#    #+#             */
+/*   Updated: 2025/01/29 10:27:14 by aluzingu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Animal.hpp"
 #include "Cat.hpp"
 #include "Dog.hpp"
+#include "WrongAnimal.hpp"
+#include "WrongCat.hpp"
 
 int main()
 {
@@ -13,9 +27,8 @@ int main()
 			meta[i] = new Cat();
 			if (meta[i] == NULL)
 			{
-				perror("Cat allocation failed");
 				std::cerr << "Exiting process now";
-				exit(1);
+				return (0);
 			}
 		}
 		else
@@ -23,9 +36,8 @@ int main()
 			meta[i] = new Dog();
 			if (meta[i] == NULL)
 			{
-				perror("Dog allocation failed");
 				std::cerr << "Exiting process now";
-				exit(1);
+				return (0);
 			}
 		}
 	}
@@ -37,10 +49,7 @@ int main()
 		std::cout << std::endl;
 		std::cout << "Animal _type: " << meta[i]->getType() << std::endl;
 		meta[i]->makeSound();
-		std::cout << std::endl;
 	}
-	std::cout << std::endl;
-
 	std::cout << "Deconstructing" << std::endl;
 	for (int i = 0; i < 10; i++)
 		delete(meta[i]);

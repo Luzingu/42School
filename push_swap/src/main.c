@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aluzingu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aluzingu <aluzingu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 16:42:59 by aluzingu          #+#    #+#             */
-/*   Updated: 2024/07/08 16:43:01 by aluzingu         ###   ########.fr       */
+/*   Updated: 2025/02/13 09:46:45 by aluzingu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	ft_do(char **valores, int start)
 	t_stack	*stack_b;
 	int		size;
 	int		erro;
-
+ 
 	erro = 1;
 	stack_a = fill_stack(start, valores, &erro);
 	if (erro == 0)

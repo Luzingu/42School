@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aluzingu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aluzingu <aluzingu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 09:26:31 by aluzingu          #+#    #+#             */
-/*   Updated: 2024/08/11 09:26:32 by aluzingu         ###   ########.fr       */
+/*   Updated: 2025/02/13 10:40:57 by aluzingu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	draw(t_fdf *fdf, t_mapa *mapa)
 				draw_line(project_iso(create_point(x, y, mapa), fdf),
 					project_iso(create_point(x + 1, y, mapa), fdf), fdf);
 			if (y != fdf->mapa->height -1)
-				draw_line(project_iso(create_point(x, y, mapa), fdf),
+				draw_line(project_iso(create_point(x, y, mapa), fdf) ,
 					project_iso(create_point(x, y + 1, mapa), fdf), fdf);
 			x++;
 		}

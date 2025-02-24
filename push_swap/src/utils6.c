@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   operation.c                                        :+:      :+:    :+:   */
+/*   utils6.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aluzingu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aluzingu <aluzingu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 15:45:56 by aluzingu          #+#    #+#             */
-/*   Updated: 2024/07/10 15:45:58 by aluzingu         ###   ########.fr       */
+/*   Updated: 2025/02/13 10:21:43 by aluzingu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	sort(t_stack **stack_a, t_stack **stack_b)
 {
 	int	i;
 
-	ft_only_thre_in_stack_a(stack_a, stack_b);
+	ft_only_thre_in_stack_a(stack_a, stack_b); 
 	mini_sort(stack_a);
 	i = 0;
 	while (*stack_b)

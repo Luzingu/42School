@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   DiamondTrap.cpp                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aluzingu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/27 11:12:26 by aluzingu          #+#    #+#             */
+/*   Updated: 2025/01/27 11:12:27 by aluzingu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "DiamondTrap.hpp"
 
 DiamondTrap::DiamondTrap(): ClapTrap("defaultDT_clap_trap")
@@ -24,13 +36,11 @@ DiamondTrap::DiamondTrap(std::string _name): ClapTrap(_name + "_clap_trap")
 	std::cout << "DiamondTrap Constructor for the name " << this->name << " called" << std::endl;
 }
 
-// Deconstructors
 DiamondTrap::~DiamondTrap()
 {
 	std::cout << "DiamondTrap Deconstructor for " << this->name << " called" << std::endl;
 }
 
-// Overloaded Operators
 DiamondTrap &DiamondTrap::operator=(const DiamondTrap &src)
 {
 	std::cout << "DiamondTrap Assignation operator called" << std::endl;
@@ -41,7 +51,6 @@ DiamondTrap &DiamondTrap::operator=(const DiamondTrap &src)
 	return *this;
 }
 
-// Public Methods
 void	DiamondTrap::attack(const std::string &target)
 {
 	ScavTrap::attack(target);

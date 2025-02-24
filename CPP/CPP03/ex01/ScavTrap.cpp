@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ScavTrap.cpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aluzingu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/27 11:08:19 by aluzingu          #+#    #+#             */
+/*   Updated: 2025/01/27 11:08:21 by aluzingu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ScavTrap.hpp"
 
 ScavTrap::ScavTrap(void): ClapTrap()
@@ -11,7 +23,7 @@ ScavTrap::ScavTrap(void): ClapTrap()
 
 ScavTrap::ScavTrap(std::string _name): ClapTrap(_name)
 {
-	this->guarding_gate= false;
+	this->guarding_gate = false;
 	std::cout << "ScavTrap Constructor for the name " << this->name << " called" << std::endl;
 }
 
