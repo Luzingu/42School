@@ -5,18 +5,18 @@
 #                                                     +:+ +:+         +:+      #
 #    By: aluzingu <aluzingu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/02/24 14:18:15 by aluzingu          #+#    #+#              #
-#    Updated: 2025/02/24 17:45:03 by aluzingu         ###   ########.fr        #
+#    Created: 2025/02/24 19:17:38 by aluzingu          #+#    #+#              #
+#    Updated: 2025/02/25 11:00:06 by aluzingu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = identity
+NAME = array
 
 CC = c++
 
-FLAGS = -Werror -Wall -Wextra -std=c++98
+FLAGS = -Werror -Wextra -Wall -std=c++98
 
-SRCS = main.cpp ClassBase.cpp function.cpp
+SRCS = main.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 

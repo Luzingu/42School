@@ -5,28 +5,28 @@
 #                                                     +:+ +:+         +:+      #
 #    By: aluzingu <aluzingu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/02/24 14:18:15 by aluzingu          #+#    #+#              #
-#    Updated: 2025/02/24 17:45:03 by aluzingu         ###   ########.fr        #
+#    Created: 2025/02/27 17:53:09 by aluzingu          #+#    #+#              #
+#    Updated: 2025/02/27 17:56:22 by aluzingu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = identity
+NAME = stack
 
 CC = c++
 
 FLAGS = -Werror -Wall -Wextra -std=c++98
 
-SRCS = main.cpp ClassBase.cpp function.cpp
+SRCS = main.cpp
 
 OBJS = $(SRCS:.cpp=.o)
-
-%.o : %.cpp
-	$(CC) $(FLAGS) -c -o $@ $<
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
 	$(CC) $(FLAGS) $(OBJS) -o $(NAME)
+
+%.o : %.cpp
+	$(CC) $(FLAGS) -c -o $@ $<
 
 clean:
 	rm -f $(OBJS)
