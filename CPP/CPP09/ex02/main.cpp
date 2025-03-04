@@ -5,23 +5,21 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aluzingu <aluzingu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/28 11:19:00 by aluzingu          #+#    #+#             */
-/*   Updated: 2025/03/03 18:22:53 by aluzingu         ###   ########.fr       */
+/*   Created: 2025/03/04 14:58:44 by aluzingu          #+#    #+#             */
+/*   Updated: 2025/03/04 18:52:20 by aluzingu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "BitcoinExchange.hpp"
+#include "PmergeMe.hpp"
 
-
-int main(int argc, char **argv)
+int   main(int argc, char **argv)
 {
-    if(argc == 2)
+    if(argc <= 1)
     {
-        BTC btc(argv[1]);
-        (void) argc;
-        (void) argv;
+        std::cout << "Error" << std::endl;
+        return (0);
     }
-    else
-        std::cout << "Error: could not open file." << std::endl;
+    PMergeMe perge(argc, argv);
+    
     return (0);
 }

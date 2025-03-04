@@ -6,7 +6,7 @@
 /*   By: aluzingu <aluzingu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:13:34 by aluzingu          #+#    #+#             */
-/*   Updated: 2025/02/28 16:06:15 by aluzingu         ###   ########.fr       */
+/*   Updated: 2025/03/03 18:46:38 by aluzingu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
     {
         private:
             std::map<std::string, float> data;
-            int analize;
             
             void    read_data_file()
             {
@@ -34,7 +33,7 @@
                 if(!data_file)
                 {
                     std::cout << "Error: could not open file." << std::endl;
-                    return ;
+                    exit(1);
                 }
                 std::string date;
                 float value;
@@ -50,7 +49,13 @@
             std::map<std::string, float>::iterator get_exchange(std::string date)
             {
                 std::map<std::string, float>::iterator it = this->data.lower_bound(date);
-                if(it == this->data.end())
+                
+                if (it == this->data.end())
+                {
+                    it--;
+                    return (it);
+                }
+                if (it->first != date && it != this->data.begin())
                     it--;
                 return (it);
             }
@@ -61,14 +66,13 @@
                 if (!input_file)
                 {
                     std::cout << "Error: could not open file." << std::endl;
-                    return ;
+                    exit(1);
                 }
                 std::string linha;
                 std::string date;
                 float value;
                 while(std::getline(input_file, linha))
                 {
-                    this->analize = 0;
                     gate_date_value(linha, "|", date, value);
                     if(!valid_date(date))
                         std::cout << "Error: bad input => " << date << std::endl;

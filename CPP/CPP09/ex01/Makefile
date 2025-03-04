@@ -5,16 +5,16 @@
 #                                                     +:+ +:+         +:+      #
 #    By: aluzingu <aluzingu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/02/28 11:19:27 by aluzingu          #+#    #+#              #
-#    Updated: 2025/03/03 18:22:50 by aluzingu         ###   ########.fr        #
+#    Created: 2025/03/03 18:26:44 by aluzingu          #+#    #+#              #
+#    Updated: 2025/03/03 19:09:08 by aluzingu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = btc
+NAME = RPN
 
 CC = c++
 
-FLAGS = -Werror -Wall -Wextra  -std=c++98
+FLAGS = -Werror -Wextra -Wall
 
 SRCS = main.cpp
 

@@ -5,23 +5,21 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aluzingu <aluzingu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/28 11:19:00 by aluzingu          #+#    #+#             */
-/*   Updated: 2025/03/03 18:22:53 by aluzingu         ###   ########.fr       */
+/*   Created: 2025/03/03 18:26:53 by aluzingu          #+#    #+#             */
+/*   Updated: 2025/03/03 19:09:13 by aluzingu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "BitcoinExchange.hpp"
+#include "RPN.hpp"
 
-
-int main(int argc, char **argv)
+int main(int argc, char **agrv)
 {
-    if(argc == 2)
+    if (argc != 2)
     {
-        BTC btc(argv[1]);
-        (void) argc;
-        (void) argv;
+        std::cout << "Input Error" << std::endl;
+        return (0);
     }
-    else
-        std::cout << "Error: could not open file." << std::endl;
+    RPN rpn(agrv[1]);
     return (0);
 }
+
