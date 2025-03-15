@@ -1,0 +1,53 @@
+services:
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    image: nginx
+    ports: 
+      - 80:80
+      - 443:443
+    container_name: nginx
+    volumes:
+      - ./data/wordpress:/var/www/html
+    networks:
+      - iception_network
+
+  php_fpm:
+    build:
+      context: ./php_fpm
+      dockerfile: Dockerfile
+    image: php_fpm
+    container_name: php_fpm
+    networks:
+      - iception_network
+    volumes:
+      - ./data/wordpress:/var/www/html
+    envireonment:
+      userDb: ${userDb1}
+      passDb: ${passDb1}
+      dbName: ${dbName}
+      siteTile: ${siteTile}
+      siteUserAdmin: ${siteUserAdmin}
+      sitePassAdmin: ${sitePassAdmin}
+      siteAdminEmail: ${siteAdminEmail}
+
+  mariadb:
+    build:
+      context: ./mariadb
+      dockerfile: Dockerfile
+    image: mariadb
+    container_name: mariadb
+    volumes:
+      - ./data/db:/var/lib/mysql
+    networks:
+      - iception_network
+    environment:
+      userDb1: ${userDb1}
+      passDb1: ${passDb1}
+      userDb2: ${userDb2}
+      passDb2: {$passDb2}
+      dbName: ${dbName}
+networks:
+  iception_network:
+    driver: bridge
