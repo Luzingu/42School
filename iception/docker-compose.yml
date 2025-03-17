@@ -3,13 +3,13 @@ services:
     build:
       context: ./nginx
       dockerfile: Dockerfile
-    image: nginx
+    image: aluzingu/nginx
     ports: 
       - 80:80
       - 443:443
     container_name: nginx
-    volumes:
-      - ./data/wordpress:/var/www/html
+    #volumes:
+      #- /home/aluzingu/data/site:/var/www/html
     networks:
       - iception_network
 
@@ -17,13 +17,15 @@ services:
     build:
       context: ./php_fpm
       dockerfile: Dockerfile
-    image: php_fpm
+    image: aluzingu/php_fpm
     container_name: php_fpm
     networks:
       - iception_network
-    volumes:
-      - ./data/wordpress:/var/www/html
-    envireonment:
+    #volumes:
+      #- /home/aluzingu/data/site:/var/www/html
+    ports:
+      - 9000:9000
+    environment:
       userDb: ${userDb1}
       passDb: ${passDb1}
       dbName: ${dbName}
@@ -36,17 +38,19 @@ services:
     build:
       context: ./mariadb
       dockerfile: Dockerfile
-    image: mariadb
+    image: aluzingu/mariadb
     container_name: mariadb
     volumes:
-      - ./data/db:/var/lib/mysql
+      - /home/aluzingu/data/db:/var/lib/mysql
     networks:
       - iception_network
+    ports:
+      - 3306:3306
     environment:
       userDb1: ${userDb1}
       passDb1: ${passDb1}
       userDb2: ${userDb2}
-      passDb2: {$passDb2}
+      passDb2: ${passDb2}
       dbName: ${dbName}
 networks:
   iception_network:
