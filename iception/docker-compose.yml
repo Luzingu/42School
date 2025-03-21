@@ -1,30 +1,31 @@
 services:
+  
   nginx:
     build:
-      context: ./nginx
+      context: ./mandatory/nginx
       dockerfile: Dockerfile
     image: aluzingu/nginx
     ports: 
-      - 80:80
       - 443:443
     container_name: nginx
-    #volumes:
-      #- /home/aluzingu/data/site:/var/www/html
+    volumes:
+      - /home/aluzingu/data/site:/var/www/html
     networks:
       - iception_network
+    depends_on:
+      - php_fpm
+    restart: on-failure
 
   php_fpm:
     build:
-      context: ./php_fpm
+      context: ./mandatory/php_fpm
       dockerfile: Dockerfile
     image: aluzingu/php_fpm
     container_name: php_fpm
     networks:
       - iception_network
-    #volumes:
-      #- /home/aluzingu/data/site:/var/www/html
-    ports:
-      - 9000:9000
+    volumes:
+      - /home/aluzingu/data/site:/var/www/html
     environment:
       userDb: ${userDb1}
       passDb: ${passDb1}
@@ -33,10 +34,14 @@ services:
       siteUserAdmin: ${siteUserAdmin}
       sitePassAdmin: ${sitePassAdmin}
       siteAdminEmail: ${siteAdminEmail}
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    restart: on-failure
 
   mariadb:
     build:
-      context: ./mariadb
+      context: ./mandatory/mariadb
       dockerfile: Dockerfile
     image: aluzingu/mariadb
     container_name: mariadb
@@ -44,14 +49,39 @@ services:
       - /home/aluzingu/data/db:/var/lib/mysql
     networks:
       - iception_network
-    ports:
-      - 3306:3306
     environment:
       userDb1: ${userDb1}
       passDb1: ${passDb1}
       userDb2: ${userDb2}
       passDb2: ${passDb2}
       dbName: ${dbName}
+    restart: on-failure
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 1s
+      retries: 2
+      timeout: 2s
+
+  adminer:
+    build:
+      context: ./bonus/adminer
+      dockerfile: Dockerfile
+    image: aluzingu/adminer
+    container_name: adminer
+    networks:
+      - iception_network
+    restart: on-failure
+
+  redis-cahe:
+    build:
+      context: ./bonus/redis_cache
+      dockerfile: Dockerfile
+    image: aluzingu/redis_cache
+    container_name: redis_cache
+    networks: 
+      - iception_network
+    restart: on-failure
+
 networks:
   iception_network:
     driver: bridge

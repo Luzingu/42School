@@ -7,4 +7,5 @@ RUN mkdir -p /etc/nginx/ssl/
 COPY ./ssl/nginx.crt /etc/nginx/ssl/nginx.crt 
 COPY ./ssl/nginx.key /etc/nginx/ssl/nginx.key 
 RUN apt install openssl
+WORKDIR "/var/www/html"
 CMD ["nginx", "-g", "daemon off;"]

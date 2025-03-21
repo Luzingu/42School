@@ -10,9 +10,14 @@ sed -i "s/localhost/mariadb/g" wp-config.php
 sed -i "s/username_here/$userDb/g" wp-config.php
 sed -i "s/database_name_here/$dbName/g" wp-config.php
 sed -i "s/password_here/$passDb/g" wp-config.php
-cd && curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp
+cd
+curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp
+cd /var/www/html
 wp core install --url=aluzingu.42.fr --title="$siteTile" --admin_user="$siteUserAdmin" --admin_password="$sitePassAdmin" --admin_email="$siteAdminEmail" --allow-root
 wp theme install astra --activate --allow-root
-
+wp plugin install redis-cache --activate --allow-root
+wp redis enable --allow-root
+wp redis enable
 service php8.2-fpm stop;
 php-fpm8.2 --nodaemonize
